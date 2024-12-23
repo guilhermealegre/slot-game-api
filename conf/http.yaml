@@ -1,0 +1,5 @@
+host: slot-games.api
+# host: localhost
+port: 9000
+jwtSecret: slot-games-secret
+jwtExpiryTimeHours: 24

@@ -1,0 +1,910 @@
+{
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "swagger": "2.0",
+  "info": {
+    "description": "# Slot Games Service API",
+    "title": "Slot Games Service",
+    "version": "1.0"
+  },
+  "basePath": "/api/v1",
+  "paths": {
+    "/alive": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "alive"
+        ],
+        "summary": "Internal service status check.",
+        "operationId": "alive",
+        "responses": {
+          "200": {
+            "description": "SwaggerAliveResponse",
+            "schema": {
+              "$ref": "#/definitions/SwaggerAliveResponse"
+            }
+          },
+          "400": {
+            "description": "ErrorResponse",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/p/alive": {
+      "get": {
+        "security": [
+          {
+            "BasicAuth": []
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "alive"
+        ],
+        "summary": "Public service status check.",
+        "operationId": "public_alive",
+        "responses": {
+          "200": {
+            "description": "SwaggerPublicAliveResponse",
+            "schema": {
+              "$ref": "#/definitions/SwaggerPublicAliveResponse"
+            }
+          },
+          "400": {
+            "description": "ErrorResponse",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/p/login": {
+      "post": {
+        "description": "Login user",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "auth"
+        ],
+        "operationId": "LoginRequest",
+        "parameters": [
+          {
+            "description": "Body",
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "email",
+                "password"
+              ],
+              "properties": {
+                "email": {
+                  "description": "Email",
+                  "type": "string",
+                  "x-go-name": "Email"
+                },
+                "password": {
+                  "description": "Password",
+                  "type": "string",
+                  "x-go-name": "Password"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "SwaggerScannerLoginResponse",
+            "schema": {
+              "$ref": "#/definitions/SwaggerScannerLoginResponse"
+            }
+          },
+          "400": {
+            "description": "ErrorResponse",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/p/register": {
+      "post": {
+        "description": "Signup  user",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "auth"
+        ],
+        "operationId": "SignupRequest",
+        "parameters": [
+          {
+            "description": "Body",
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "first_name",
+                "last_name",
+                "avatar",
+                "email",
+                "password",
+                "confirm_password"
+              ],
+              "properties": {
+                "avatar": {
+                  "description": "Avatar",
+                  "type": "string",
+                  "x-go-name": "Avatar"
+                },
+                "confirm_password": {
+                  "description": "Confirm Password",
+                  "type": "string",
+                  "x-go-name": "ConfirmPassword"
+                },
+                "email": {
+                  "description": "Email",
+                  "type": "string",
+                  "x-go-name": "Email"
+                },
+                "first_name": {
+                  "description": "First Name",
+                  "type": "string",
+                  "x-go-name": "FirstName"
+                },
+                "last_name": {
+                  "description": "Last Name",
+                  "type": "string",
+                  "x-go-name": "LastName"
+                },
+                "password": {
+                  "description": "Password",
+                  "type": "string",
+                  "x-go-name": "Password"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "SuccessResponse",
+            "schema": {
+              "$ref": "#/definitions/SuccessResponse"
+            }
+          },
+          "400": {
+            "description": "ErrorResponse",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/profile": {
+      "get": {
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "description": "Ger user profile",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "user"
+        ],
+        "operationId": "user",
+        "responses": {
+          "200": {
+            "description": "SwaggerProfileResponse",
+            "schema": {
+              "$ref": "#/definitions/SwaggerProfileResponse"
+            }
+          },
+          "400": {
+            "description": "ErrorResponse",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/slot/history": {
+      "get": {
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "description": "Get slot history",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "slot"
+        ],
+        "operationId": "slot",
+        "responses": {
+          "200": {
+            "description": "SwaggerSpinSlotMachineHistoryResponse",
+            "schema": {
+              "$ref": "#/definitions/SwaggerSpinSlotMachineHistoryResponse"
+            }
+          },
+          "400": {
+            "description": "ErrorResponse",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/slot/spin": {
+      "post": {
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "description": "Spin slot machine",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "slot"
+        ],
+        "operationId": "SpinSlotRequest",
+        "parameters": [
+          {
+            "description": "Body",
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "bet_amount"
+              ],
+              "properties": {
+                "bet_amount": {
+                  "description": "Bet Amount",
+                  "type": "number",
+                  "format": "double",
+                  "x-go-name": "BetAmount"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "SwaggerSpinSlotMachineResponse",
+            "schema": {
+              "$ref": "#/definitions/SwaggerSpinSlotMachineResponse"
+            }
+          },
+          "400": {
+            "description": "ErrorResponse",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/wallet/deposit": {
+      "post": {
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "description": "Deposit credits",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "user"
+        ],
+        "operationId": "DepositCreditsRequest",
+        "parameters": [
+          {
+            "description": "Body",
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "credits": {
+                  "type": "number",
+                  "format": "double",
+                  "x-go-name": "Credits"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "SwaggerDepositCreditsResponse",
+            "schema": {
+              "$ref": "#/definitions/SwaggerDepositCreditsResponse"
+            }
+          },
+          "400": {
+            "description": "ErrorResponse",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/wallet/withdraw": {
+      "post": {
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "description": "Withdraw credits",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "user"
+        ],
+        "operationId": "WithdrawCreditsRequest",
+        "parameters": [
+          {
+            "description": "Body",
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "credits": {
+                  "type": "number",
+                  "format": "double",
+                  "x-go-name": "Credits"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "SwaggerWithdrawCreditsResponse",
+            "schema": {
+              "$ref": "#/definitions/SwaggerWithdrawCreditsResponse"
+            }
+          },
+          "400": {
+            "description": "ErrorResponse",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Alive": {
+      "type": "object",
+      "properties": {
+        "hostname": {
+          "description": "Host Name",
+          "type": "string",
+          "x-go-name": "Hostname"
+        },
+        "message": {
+          "description": "Message",
+          "type": "string",
+          "x-go-name": "Message"
+        },
+        "port": {
+          "description": "Port",
+          "type": "string",
+          "x-go-name": "Port"
+        },
+        "server_name": {
+          "description": "Server Name",
+          "type": "string",
+          "x-go-name": "ServerName"
+        }
+      },
+      "x-go-package": "github.com/guilhermealegre/slot-games-api/internal/alive/domain/v1"
+    },
+    "AliveResponse": {
+      "type": "object",
+      "properties": {
+        "hostname": {
+          "description": "Host Name",
+          "type": "string",
+          "x-go-name": "Hostname"
+        },
+        "message": {
+          "description": "Message",
+          "type": "string",
+          "x-go-name": "Message"
+        },
+        "port": {
+          "description": "Port",
+          "type": "string",
+          "x-go-name": "Port"
+        },
+        "serverName": {
+          "description": "Server Name",
+          "type": "string",
+          "x-go-name": "ServerName"
+        }
+      },
+      "x-go-package": "github.com/guilhermealegre/slot-games-api/api/v1/http/envelope/response"
+    },
+    "AuthResponse": {
+      "type": "object",
+      "properties": {
+        "access_token": {
+          "type": "string",
+          "x-go-name": "AccessToken"
+        },
+        "refresh_token": {
+          "type": "string",
+          "x-go-name": "RefreshToken"
+        }
+      },
+      "x-go-package": "github.com/guilhermealegre/slot-games-api/api/v1/http/envelope/response"
+    },
+    "DepositCreditsResponse": {
+      "type": "object",
+      "properties": {
+        "balance": {
+          "type": "number",
+          "format": "double",
+          "x-go-name": "Balance"
+        }
+      },
+      "x-go-package": "github.com/guilhermealegre/slot-games-api/api/v1/http/envelope/response"
+    },
+    "ErrorResponse": {
+      "type": "object",
+      "properties": {
+        "errors": {
+          "description": "Errors",
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-go-name": "Errors"
+        },
+        "meta": {
+          "$ref": "#/definitions/Meta"
+        },
+        "status": {
+          "description": "Status",
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "Status"
+        }
+      },
+      "x-go-package": "github.com/guilhermealegre/go-clean-arch-core-lib/response"
+    },
+    "Links": {
+      "type": "object",
+      "properties": {
+        "first": {
+          "description": "First",
+          "type": "string",
+          "x-go-name": "First"
+        },
+        "last": {
+          "description": "Last",
+          "type": "string",
+          "x-go-name": "Last"
+        },
+        "next": {
+          "description": "Next",
+          "type": "string",
+          "x-go-name": "Next"
+        },
+        "prev": {
+          "description": "Prev",
+          "type": "string",
+          "x-go-name": "Prev"
+        },
+        "self": {
+          "description": "Self",
+          "type": "string",
+          "x-go-name": "Self"
+        }
+      },
+      "x-go-package": "github.com/guilhermealegre/go-clean-arch-core-lib/response"
+    },
+    "Meta": {
+      "type": "object",
+      "properties": {
+        "length": {
+          "description": "Length",
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "Length"
+        },
+        "meta_data": {
+          "description": "MetaData",
+          "type": "object",
+          "additionalProperties": {},
+          "x-go-name": "MetaData"
+        },
+        "page_size": {
+          "description": "Page Size",
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "PageSize"
+        }
+      },
+      "x-go-package": "github.com/guilhermealegre/go-clean-arch-core-lib/response"
+    },
+    "ProfileResponse": {
+      "type": "object",
+      "properties": {
+        "avatar": {
+          "type": "string",
+          "x-go-name": "Avatar"
+        },
+        "email": {
+          "type": "string",
+          "x-go-name": "Email"
+        },
+        "first_name": {
+          "type": "string",
+          "x-go-name": "FirstName"
+        },
+        "last_name": {
+          "type": "string",
+          "x-go-name": "LastName"
+        },
+        "wallet": {
+          "$ref": "#/definitions/WalletResponse"
+        }
+      },
+      "x-go-name": "SpinSlotMachineResponse",
+      "x-go-package": "github.com/guilhermealegre/slot-games-api/api/v1/http/envelope/response"
+    },
+    "PublicAlive": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "description": "Message",
+          "type": "string",
+          "x-go-name": "Message"
+        },
+        "name": {
+          "description": "Name",
+          "type": "string",
+          "x-go-name": "Name"
+        }
+      },
+      "x-go-package": "github.com/guilhermealegre/slot-games-api/internal/alive/domain/v1"
+    },
+    "PublicAliveResponse": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "description": "Message",
+          "type": "string",
+          "x-go-name": "Message"
+        },
+        "name": {
+          "description": "Name",
+          "type": "string",
+          "x-go-name": "Name"
+        }
+      },
+      "x-go-package": "github.com/guilhermealegre/slot-games-api/api/v1/http/envelope/response"
+    },
+    "Response": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "description": "Data",
+          "x-go-name": "Data"
+        },
+        "links": {
+          "$ref": "#/definitions/Links"
+        },
+        "meta": {
+          "$ref": "#/definitions/Meta"
+        }
+      },
+      "x-go-package": "github.com/guilhermealegre/go-clean-arch-core-lib/response"
+    },
+    "SpinResultResponse": {
+      "type": "object",
+      "properties": {
+        "bet_amount": {
+          "type": "number",
+          "format": "double",
+          "x-go-name": "BetAmount"
+        },
+        "payout": {
+          "type": "number",
+          "format": "double",
+          "x-go-name": "Payout"
+        },
+        "result_type": {
+          "$ref": "#/definitions/SpinResultTypeResponse"
+        },
+        "symbols": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "x-go-name": "Symbols"
+        },
+        "winning": {
+          "type": "boolean",
+          "x-go-name": "Winning"
+        }
+      },
+      "x-go-package": "github.com/guilhermealegre/slot-games-api/api/v1/http/envelope/response"
+    },
+    "SpinResultTypeResponse": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "Id"
+        },
+        "key": {
+          "type": "string",
+          "x-go-name": "Key"
+        },
+        "name": {
+          "type": "string",
+          "x-go-name": "Name"
+        }
+      },
+      "x-go-package": "github.com/guilhermealegre/slot-games-api/api/v1/http/envelope/response"
+    },
+    "SpinSlotMachineHistoryResponse": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/ProfileResponse"
+      },
+      "x-go-package": "github.com/guilhermealegre/slot-games-api/api/v1/http/envelope/response"
+    },
+    "SuccessResponse": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "description": "Success",
+          "type": "boolean",
+          "x-go-name": "Success"
+        }
+      },
+      "x-go-package": "github.com/guilhermealegre/slot-games-api/api/v1/http/envelope/response"
+    },
+    "SwaggerAliveResponse": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "description": "Data",
+          "x-go-name": "Data",
+          "$ref": "#/definitions/AliveResponse"
+        },
+        "links": {
+          "$ref": "#/definitions/Links"
+        },
+        "meta": {
+          "$ref": "#/definitions/Meta"
+        }
+      },
+      "x-go-name": "swaggerAliveResponse",
+      "x-go-package": "github.com/guilhermealegre/slot-games-api/api/v1/http/envelope/response"
+    },
+    "SwaggerDepositCreditsResponse": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "description": "Data",
+          "x-go-name": "Data",
+          "$ref": "#/definitions/DepositCreditsResponse"
+        },
+        "links": {
+          "$ref": "#/definitions/Links"
+        },
+        "meta": {
+          "$ref": "#/definitions/Meta"
+        }
+      },
+      "x-go-name": "swaggerDepositCreditsResponse",
+      "x-go-package": "github.com/guilhermealegre/slot-games-api/api/v1/http/envelope/response"
+    },
+    "SwaggerProfileResponse": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "description": "Data",
+          "x-go-name": "Data",
+          "$ref": "#/definitions/ProfileResponse"
+        },
+        "links": {
+          "$ref": "#/definitions/Links"
+        },
+        "meta": {
+          "$ref": "#/definitions/Meta"
+        }
+      },
+      "x-go-name": "swaggerProfileResponse",
+      "x-go-package": "github.com/guilhermealegre/slot-games-api/api/v1/http/envelope/response"
+    },
+    "SwaggerPublicAliveResponse": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "description": "Data",
+          "x-go-name": "Data",
+          "$ref": "#/definitions/PublicAliveResponse"
+        },
+        "links": {
+          "$ref": "#/definitions/Links"
+        },
+        "meta": {
+          "$ref": "#/definitions/Meta"
+        }
+      },
+      "x-go-name": "swaggerPublicAliveResponse",
+      "x-go-package": "github.com/guilhermealegre/slot-games-api/api/v1/http/envelope/response"
+    },
+    "SwaggerScannerLoginResponse": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "description": "Data",
+          "x-go-name": "Data",
+          "$ref": "#/definitions/AuthResponse"
+        },
+        "links": {
+          "$ref": "#/definitions/Links"
+        },
+        "meta": {
+          "$ref": "#/definitions/Meta"
+        }
+      },
+      "x-go-name": "swaggerScannerLoginResponse",
+      "x-go-package": "github.com/guilhermealegre/slot-games-api/api/v1/http/envelope/response"
+    },
+    "SwaggerSpinSlotMachineHistoryResponse": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "description": "Data",
+          "x-go-name": "Data",
+          "$ref": "#/definitions/SpinSlotMachineHistoryResponse"
+        },
+        "links": {
+          "$ref": "#/definitions/Links"
+        },
+        "meta": {
+          "$ref": "#/definitions/Meta"
+        }
+      },
+      "x-go-name": "swaggerSpinSlotMachineHistoryResponse",
+      "x-go-package": "github.com/guilhermealegre/slot-games-api/api/v1/http/envelope/response"
+    },
+    "SwaggerSpinSlotMachineResponse": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "description": "Data",
+          "x-go-name": "Data",
+          "$ref": "#/definitions/ProfileResponse"
+        },
+        "links": {
+          "$ref": "#/definitions/Links"
+        },
+        "meta": {
+          "$ref": "#/definitions/Meta"
+        }
+      },
+      "x-go-name": "swaggerSpinSlotMachineResponse",
+      "x-go-package": "github.com/guilhermealegre/slot-games-api/api/v1/http/envelope/response"
+    },
+    "SwaggerSuccessResponse": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "description": "Data",
+          "x-go-name": "Data",
+          "$ref": "#/definitions/SuccessResponse"
+        },
+        "links": {
+          "$ref": "#/definitions/Links"
+        },
+        "meta": {
+          "$ref": "#/definitions/Meta"
+        }
+      },
+      "x-go-name": "swaggerSuccessResponse",
+      "x-go-package": "github.com/guilhermealegre/slot-games-api/api/v1/http/envelope/response"
+    },
+    "SwaggerWithdrawCreditsResponse": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "description": "Data",
+          "x-go-name": "Data",
+          "$ref": "#/definitions/WithdrawCreditsResponse"
+        },
+        "links": {
+          "$ref": "#/definitions/Links"
+        },
+        "meta": {
+          "$ref": "#/definitions/Meta"
+        }
+      },
+      "x-go-package": "github.com/guilhermealegre/slot-games-api/api/v1/http/envelope/response"
+    },
+    "WalletResponse": {
+      "type": "object",
+      "properties": {
+        "balance": {
+          "type": "number",
+          "format": "double",
+          "x-go-name": "Balance"
+        }
+      },
+      "x-go-package": "github.com/guilhermealegre/slot-games-api/api/v1/http/envelope/response"
+    },
+    "WithdrawCreditsResponse": {
+      "type": "object",
+      "properties": {
+        "balance": {
+          "type": "number",
+          "format": "double",
+          "x-go-name": "Balance"
+        }
+      },
+      "x-go-package": "github.com/guilhermealegre/slot-games-api/api/v1/http/envelope/response"
+    }
+  },
+  "securityDefinitions": {
+    "Bearer": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header"
+    }
+  }
+}

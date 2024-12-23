@@ -1,0 +1,9 @@
+path: /tmp/slot-games/log
+file: slot-games.log
+level: warning
+stackTrace: true
+body: true
+
+output:
+  - file
+  - console

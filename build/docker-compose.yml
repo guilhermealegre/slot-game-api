@@ -1,0 +1,36 @@
+services:
+  slot-games.postgres:
+    container_name: slot-games.postgres
+    image: postgres:15.2-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: slot_games
+    volumes:
+      - "./docker_volumes/postgres/db:/var/lib/postgresql/data"
+      - "./docker_volumes/postgres/log:/var/log/postgresql"
+    ports:
+      - "5432:5432"
+    networks:
+      - backend-slot-games
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  slot-games.api:
+    build:
+      context: ../
+      dockerfile: Dockerfile
+    ports:
+      - "9000:9000"
+    networks:
+      - backend-slot-games
+    depends_on:
+      slot-games.postgres:
+        condition: service_healthy
+
+networks:
+  backend-slot-games:
+    driver: bridge
